@@ -5,8 +5,8 @@
         "core": "*",
         "microphone": "*",
         "microturtle": "github:microsoft/pxt-microturtle#v0.0.9",
-        "bluetooth": "*",
-        "devices": "*"
+        "radio": "*",
+        "radio-broadcast": "*"
     },
     "files": [
         "main.blocks",

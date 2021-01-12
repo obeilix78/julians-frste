@@ -1,27 +1,70 @@
-let Matte_spill = false
-let Spille = false
 let LeveL = 0
-let Setings_1 = false
 let Side = 0
 let Bok_valg = 0
 let Bok = ""
+let TUR_Ting = ""
+let Setings_1 = false
 let Setings_2 = false
 let Tur = false
-let Lese = false
+let Lese = true
 let Bevegelse = ""
+let Spille = false
+let Matte_spill = false
 basic.showString("HEI")
 basic.forever(function () {
     if (Tur == true) {
         Bevegelse = "EROR"
         Setings_2 = false
+        Setings_1 = false
     }
     while (Tur == true) {
         basic.showString("T")
+        if (input.buttonIsPressed(Button.AB)) {
+            Setings_1 = true
+            Tur = false
+            Bevegelse = ""
+        }
+        while (TUR_Ting == "") {
+            if (input.buttonIsPressed(Button.A)) {
+                TUR_Ting = "kompas og tempratur"
+            }
+            if (input.buttonIsPressed(Button.B)) {
+                TUR_Ting = ""
+            }
+        }
+        while (TUR_Ting == "kompas og tempratur") {
+            if (input.buttonIsPressed(Button.A)) {
+                TUR_Ting = "tempratur"
+            }
+            if (input.buttonIsPressed(Button.B)) {
+                TUR_Ting = "kompas"
+            }
+        }
+        while (TUR_Ting == "tempratur") {
+            basic.showString(" " + input.temperature())
+        }
+        while (TUR_Ting == "kmpas") {
+            let Tur_Kompas_N_S_Ø_V = ""
+            basic.showString(Tur_Kompas_N_S_Ø_V)
+            basic.pause(100)
+            if (Tur_Kompas_N_S_Ø_V == "N") {
+                basic.showArrow(ArrowNames.North)
+            }
+            if (Tur_Kompas_N_S_Ø_V == "S") {
+                basic.showArrow(ArrowNames.South)
+            }
+            if (Tur_Kompas_N_S_Ø_V == "Ø") {
+                basic.showArrow(ArrowNames.East)
+            }
+            if (Tur_Kompas_N_S_Ø_V == "V") {
+                basic.showArrow(ArrowNames.West)
+            }
+        }
     }
 })
 basic.forever(function () {
     if (Lese == true) {
-        Bok = " FLUKTEN TIL NORGE "
+        Bok = "FLUKTEN TIL NORGE"
         Bok_valg = 1
         Bevegelse = "EROR"
         Setings_2 = false
@@ -40,20 +83,38 @@ basic.forever(function () {
         while (Bok_valg == 1) {
             if (input.buttonIsPressed(Button.A)) {
                 if (Bok == "FLUKTEN TIL NORGE") {
+                    music.playMelody("- C5 B C5 G C5 - C5 ", 500)
                     Bok = "GUTA I TRE HUSET"
                 } else if (Bok == "GUTA I TRE HUSET") {
+                    music.playMelody("- C5 B C5 G C5 - C5 ", 500)
                     Bok = "ANDRE VERDENS KRIG"
                 } else {
-                    music.playMelody("C5 C5 C5 C5 - - - - ", 500)
+                    basic.showLeds(`
+                        # # # # #
+                        # # # # #
+                        # # # # #
+                        # # # # #
+                        # # # # #
+                        `)
+                    music.playMelody("C5 B C5 B - - - - ", 500)
                 }
             }
             if (input.buttonIsPressed(Button.B)) {
                 if (Bok == "ANDRE VERDENS KRIG") {
+                    music.playMelody("- C5 B C5 G C5 - C5 ", 500)
                     Bok = "GUTA I TRE HUSET"
                 } else if (Bok == "GUTA I TRE HUSET") {
+                    music.playMelody("- C5 B C5 G C5 - C5 ", 500)
                     Bok = "FLUKTEN TIL NORGE"
                 } else {
-                    music.playMelody("C5 C5 C5 C5 - - - - ", 500)
+                    basic.showLeds(`
+                        # # # # #
+                        # # # # #
+                        # # # # #
+                        # # # # #
+                        # # # # #
+                        `)
+                    music.playMelody("C5 B C5 B - - - - ", 500)
                 }
             }
             if (input.buttonIsPressed(Button.AB)) {
@@ -138,50 +199,48 @@ basic.forever(function () {
                 basic.pause(2000)
                 Bevegelse = ""
             }
-            if (input.isGesture(Gesture.FreeFall)) {
-                if (input.isGesture(Gesture.ScreenUp)) {
-                    basic.showLeds(`
-                        . . . . .
-                        . # . # .
-                        . . . . .
-                        . . # . .
-                        . . . . .
-                        `)
-                    for (let index = 0; index < 4; index++) {
-                        music.playMelody("C5 B A G F E D C ", 500)
-                    }
-                }
-                if (input.isGesture(Gesture.ScreenDown)) {
-                    basic.showLeds(`
-                        . . . . .
-                        . # . # .
-                        . . . . .
-                        . # # # .
-                        # . . . #
-                        `)
-                }
-            }
-            if (input.isGesture(Gesture.EightG)) {
+        }
+        if (input.isGesture(Gesture.FreeFall)) {
+            if (input.isGesture(Gesture.ScreenUp)) {
                 basic.showLeds(`
                     . . . . .
                     . # . # .
                     . . . . .
-                    . # . # .
-                    # . # . #
+                    . . # . .
+                    . . . . .
                     `)
-                for (let index = 0; index < 5; index++) {
-                    music.playMelody("C5 B C5 B C5 B C5 B ", 500)
-                }
+                music.playMelody("C5 B A G F E D C ", 500)
             }
-            if (input.isGesture(Gesture.Shake)) {
+            if (input.isGesture(Gesture.ScreenDown)) {
                 basic.showLeds(`
                     . . . . .
                     . # . # .
                     . . . . .
-                    # # # # #
-                    . . . # #
+                    . # # # .
+                    # . . . #
                     `)
             }
+        }
+        if (input.isGesture(Gesture.EightG)) {
+            basic.showLeds(`
+                . . . . .
+                . # . # .
+                . . . . .
+                . # . # .
+                # . # . #
+                `)
+            for (let index = 0; index < 5; index++) {
+                music.playMelody("D C D C D C D C ", 500)
+            }
+        }
+        if (input.isGesture(Gesture.Shake)) {
+            basic.showLeds(`
+                . . . . .
+                . # . # .
+                . . . . .
+                # # # # #
+                . . . # #
+                `)
         }
     }
 })
@@ -199,12 +258,11 @@ basic.forever(function () {
 basic.forever(function () {
     while (Setings_1 == true) {
         if (input.buttonIsPressed(Button.AB)) {
-            music.setVolume(0)
-            led.setBrightness(64)
+            led.setBrightness(0)
         }
         if (input.buttonIsPressed(Button.A)) {
-            music.setVolume(117)
-            led.setBrightness(117)
+            music.setVolume(105)
+            led.setBrightness(88)
         }
         if (input.buttonIsPressed(Button.B)) {
             music.setVolume(255)
@@ -216,11 +274,11 @@ basic.forever(function () {
             Setings_1 = false
             basic.clearScreen()
         }
+        if (Setings_2 == true) {
+            basic.showString("APER")
+        }
     }
-    if (Setings_2 == true) {
-        basic.showString("APER")
-    }
-    while (Setings_2 == true && (Lese && Tur) == false) {
+    while (Setings_2 == true && (Lese && true) == false) {
         if (input.logoIsPressed()) {
             Lese = true
         }
